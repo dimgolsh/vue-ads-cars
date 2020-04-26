@@ -65,7 +65,7 @@
       loading(){
         return this.$store.loading
       }
-    }
+    },
     methods: {
       onSubmit () {
         if (this.$refs.form.validate()) {
@@ -76,6 +76,9 @@
           this.$store.dispatch('loginUser',user)
           .then(()=>{
             this.$router.push('/')
+          })
+          .catch(()=>{
+
           })
 
           console.log(user)
