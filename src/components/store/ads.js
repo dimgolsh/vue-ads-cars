@@ -67,9 +67,9 @@ export default {
           payload.imageSrc)
 
          const fbValue = await fb.database().ref('ads').push(newAd)
-         commit('createdAd',{
+         commit('createAd',{
            ...newAd,
-           id: ad.key
+           id: fbValue.key
          })
       } catch (error) {
         commit('setLoading',false)
