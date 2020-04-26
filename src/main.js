@@ -19,7 +19,7 @@ new Vue({
   template: '<App/>',
   created(){
     fb.initializeApp({
-      apiKey: process.env.API_KEY
+      apiKey: 'AIzaSyApAiKOYZIx5W3T2sBtGCapm-5z0hV4bB8'
     })
   }
 })
