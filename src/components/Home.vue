@@ -6,7 +6,7 @@
         <v-flex xs12>
           <v-carousel>
             <v-carousel-item
-              v-for="ad in ads"
+              v-for="ad in promoAds"
               :key="ad.id"
               :src="ad.imageSrc"
             >
@@ -28,11 +28,11 @@
           :key="ad.id"
         >
           <v-card>
-            <v-img
+            <v-card-media
               :src="ad.imageSrc"
               height="200px"
             >
-            </v-img>
+            </v-card-media>
             <v-card-title primary-title>
               <div>
                 <h3 class="headline mb-0">{{ad.title}}</h3>
@@ -55,29 +55,15 @@
 export default {
   data () {
     return {
-      ads: [
-        {
-          title: 'First ad',
-          description: 'Hello i am description',
-          promo: false,
-          imageSrc: 'https://images.unsplash.com/photo-1542362567-b07e54358753?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-          id: '123'
-        },
-        {
-          title: 'Second ad',
-          description: 'Hello i am description',
-          promo: true,
-          imageSrc: 'https://images.unsplash.com/photo-1494905998402-395d579af36f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-          id: '1234'
-        },
-        {
-          title: 'Third ad',
-          description: 'Hello i am description',
-          promo: true,
-          imageSrc: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-          id: '12345'
-        }
-      ]
+
+    }
+  },
+  computed: {
+    promoAds(){
+      return this.$store.getters.promoAds
+    },
+     ads(){
+      return this.$store.getters.ads
     }
   }
 }
