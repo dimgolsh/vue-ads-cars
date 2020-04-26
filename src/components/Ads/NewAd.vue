@@ -12,13 +12,14 @@
             required
             :rules="[v => !!v || 'Title is required']"
           ></v-text-field>
-          <v-textarea
+          <v-text-field
             name="description"
             label="Ad description"
             type="text"
             v-model="description"
+            multi-line
             :rules="[v => !!v || 'Description is required']"
-          ></v-textarea>
+          ></v-text-field>
         </v-form>
         <v-layout row class="mb-3">
           <v-flex xs12>
@@ -76,9 +77,10 @@
           const ad = {
             title: this.title,
             description: this.description,
-            promo: this.promo
+            promo: this.promo,
+            imageSrc: 'https://images.unsplash.com/photo-1485463611174-f302f6a5c1c9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1055&q=80'
           }
-
+          this.$store.dispatch('createAd',ad)
           console.log(ad)
         }
       }

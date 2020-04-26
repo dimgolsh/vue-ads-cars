@@ -3,13 +3,13 @@
     <v-layout row>
       <v-flex xs12>
         <v-card>
-          <v-img
-            src="https://images.unsplash.com/photo-1494905998402-395d579af36f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
+          <v-card-media
+            :src="ad.imageSrc"
             height="300px"
-          ></v-img>
+          ></v-card-media>
           <v-card-text>
-            <h1 class="text--primary">lorem</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, ipsa?</p>
+            <h1 class="text--primary">{{ad.title}}</h1>
+            <p>{{ad.description}}</p>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -24,6 +24,13 @@
 
 <script>
   export default {
+    props: ['id'],
+    computed:{
+      ad(){
+        const id = this.id
+        return this.$store.getters.addById(id)
+      }
+    },
     data () {
       return {}
     }
