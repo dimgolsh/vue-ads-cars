@@ -84,6 +84,11 @@
           console.log(user)
         }
       }
+    },
+    created(){
+      if(this.$route.query['loginError']){
+        this.$store.dispatch('setError','please enter to ')
+      }
     }
   }
 </script>
