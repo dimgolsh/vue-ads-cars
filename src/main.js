@@ -5,9 +5,11 @@ import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
 import store from "./components/store";
 import * as fb from "firebase";
-
+import BuyModalComponent from '@/components/Shared/BuyModal'
 Vue.use(Vuetify);
 
+
+Vue.component('app-buy-modal', BuyModalComponent)
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
