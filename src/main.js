@@ -21,5 +21,11 @@ new Vue({
     fb.initializeApp({
       apiKey: 'AIzaSyApAiKOYZIx5W3T2sBtGCapm-5z0hV4bB8'
     })
+
+    fb.auth().onAuthStateChanged(user=>{
+      if(user){
+        this.$store.dispatch('autoLoginUser', user)
+      }
+    })
   }
 })
