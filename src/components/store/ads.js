@@ -1,5 +1,23 @@
 /* eslint-disable */
+import * as fb from 'firebase'
 
+class Ad {
+  constructor(
+    title,
+    description,
+    ownerId,
+    promo=false,
+    id=null,
+    imageSrc=''){
+    this.title = title;
+    this.description = description;
+    this.ownerId = ownerId;
+    this.promo = promo;
+    this.id = id;
+    this.imageSrc = imageSrc;
+
+  }
+}
 export default {
   state: {
 
@@ -34,9 +52,28 @@ export default {
     }
   },
   actions: {
-    createAd({commit},payload){
-      payload.id = Math.random()
-      commit('createAd', payload)
+    async createAd({commit,getters},payload){
+     // payload.id = Math.random()
+      commit('clearError')
+      commit('setLoading',true)
+    //  commit('createAd', payload)
+      try {
+        const newAd = new Ad(
+          payload.title,
+          payload.description,
+          getters.user.id,
+          null,
+          null,
+          payload.imageSrc)
+
+         const fbValue = await fb.database().ref('ads').push(newAd)
+         commit('createdAd',{
+           ...newAd,
+           id: ad.key
+         })
+      } catch (error) {
+        commit('setLoading',false)
+      }
     }
   },
   getters: {

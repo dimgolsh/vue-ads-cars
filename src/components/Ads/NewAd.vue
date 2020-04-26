@@ -47,6 +47,7 @@
           <v-flex xs12>
             <v-spacer></v-spacer>
             <v-btn
+              :loading = "loading"
               :disabled="!valid"
               class="success"
               @click="createAd"
@@ -68,6 +69,11 @@
         description: '',
         promo: false,
         valid: false
+      }
+    },
+    computed:{
+      loading(){
+        return this.$store.getters.loading
       }
     },
     methods: {
