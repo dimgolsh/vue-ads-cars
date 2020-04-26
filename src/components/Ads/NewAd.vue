@@ -23,37 +23,35 @@
         </v-form>
         <v-layout row class="mb-3">
           <v-flex xs12>
-            <v-btn class="warning">
+            <v-btn class="warning" @click="triggerUpload">
               Upload
               <v-icon right dark>cloud_upload</v-icon>
             </v-btn>
+            <input
+              ref="fileInput"
+              type="file"
+              style="display: none;"
+              accept="image/*"
+              @change="onFileChange"
+            />
           </v-flex>
         </v-layout>
         <v-layout row>
           <v-flex xs12>
-            <img src="" height="100">
+            <img :src="imageSrc" height="100" v-if="imageSrc">
           </v-flex>
         </v-layout>
         <v-layout row>
           <v-flex xs12>
-            <v-switch
-              label="Add to promo?"
-              v-model="promo"
-              color="primary"
-            ></v-switch>
+            <v-switch label="Add to promo?" v-model="promo" color="primary"></v-switch>
           </v-flex>
         </v-layout>
         <v-layout row>
           <v-flex xs12>
             <v-spacer></v-spacer>
-            <v-btn
-              :loading = "loading"
-              :disabled="!valid"
-              class="success"
-              @click="createAd"
-            >
-              Create ad
-            </v-btn>
+            <v-btn :loading="loading"
+             :disabled="!valid || !image || loading"
+            class="success" @click="createAd">Create ad</v-btn>
           </v-flex>
         </v-layout>
       </v-flex>
@@ -62,34 +60,50 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        title: '',
-        description: '',
-        promo: false,
-        valid: false
+export default {
+  data() {
+    return {
+      title: "",
+      description: "",
+      promo: false,
+      valid: false,
+      image: null,
+      imageSrc: ""
+    };
+  },
+  computed: {
+    loading() {
+      return this.$store.getters.loading;
+    }
+  },
+  methods: {
+    createAd() {
+      if (this.$refs.form.validate()) {
+        // logic
+        const ad = {
+          title: this.title,
+          description: this.description,
+          promo: this.promo,
+          image:this.image
+
+             };
+        this.$store.dispatch("createAd", ad);
+        console.log(ad);
       }
     },
-    computed:{
-      loading(){
-        return this.$store.getters.loading
-      }
+    triggerUpload() {
+      this.$refs.fileInput.click();
     },
-    methods: {
-      createAd () {
-        if (this.$refs.form.validate()) {
-          // logic
-          const ad = {
-            title: this.title,
-            description: this.description,
-            promo: this.promo,
-            imageSrc: 'https://images.unsplash.com/photo-1485463611174-f302f6a5c1c9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1055&q=80'
-          }
-          this.$store.dispatch('createAd',ad)
-          console.log(ad)
-        }
-      }
+    onFileChange(event) {
+      const file = event.target.files[0];
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        this.imageSrc = reader.result;
+      };
+      reader.readAsDataURL(file);
+      this.image = file;
     }
   }
+};
 </script>
